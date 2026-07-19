@@ -32,3 +32,23 @@ output "ssh_connection_command" {
   description = "Command used to connect to the Linux virtual machine"
   value       = "ssh -i ~/.ssh/terraform-azure-infrastructure ${var.admin_username}@${azurerm_public_ip.web.ip_address}"
 }
+
+output "storage_account_name" {
+  description = "Name of the Azure Storage Account"
+  value       = azurerm_storage_account.main.name
+}
+
+output "storage_container_name" {
+  description = "Name of the private Blob container"
+  value       = azurerm_storage_container.application_data.name
+}
+
+output "log_analytics_workspace_name" {
+  description = "Name of the Log Analytics workspace"
+  value       = azurerm_log_analytics_workspace.main.name
+}
+
+output "log_analytics_workspace_id" {
+  description = "Resource ID of the Log Analytics workspace"
+  value       = azurerm_log_analytics_workspace.main.id
+}
