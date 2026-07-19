@@ -67,6 +67,10 @@ resource "azurerm_linux_virtual_machine" "web" {
 
   boot_diagnostics {}
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   tags = {
     Environment = var.environment
     ManagedBy   = "Terraform"

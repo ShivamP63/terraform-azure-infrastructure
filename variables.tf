@@ -147,3 +147,21 @@ variable "log_analytics_retention_days" {
   type        = number
   default     = 30
 }
+
+variable "azure_monitor_agent_name" {
+  description = "Name of the Azure Monitor Agent VM extension"
+  type        = string
+  default     = "AzureMonitorLinuxAgent"
+}
+
+variable "data_collection_rule_name" {
+  description = "Name of the Azure Monitor Data Collection Rule"
+  type        = string
+  default     = "dcr-contoso-linux-dev"
+}
+
+variable "data_collection_rule_association_name" {
+  description = "Name of the association between the VM and the Data Collection Rule"
+  type        = string
+  default     = "dcra-contoso-linux-dev"
+}

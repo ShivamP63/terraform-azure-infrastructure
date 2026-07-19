@@ -16,3 +16,83 @@ resource "azurerm_log_analytics_workspace" "main" {
     Project     = "Terraform Azure Infrastructure"
   }
 }
+
+resource "azurerm_virtual_machine_extension" "azure_monitor_agent" {
+  name                       = var.azure_monitor_agent_name
+  virtual_machine_id         = azurerm_linux_virtual_machine.web.id
+  publisher                  = "Microsoft.Azure.Monitor"
+  type                       = "AzureMonitorLinuxAgent"
+  type_handler_version       = "1.0"
+  auto_upgrade_minor_version = true
+  automatic_upgrade_enabled  = true
+
+  tags = {
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+    Owner       = var.owner
+    Project     = "Terraform Azure Infrastructure"
+  }
+}
+
+resource "azurerm_monitor_data_collection_rule" "linux" {
+  name                = var.data_collection_rule_name
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+
+  destinations {
+    log_analytics {
+      workspace_resource_id = azurerm_log_analytics_workspace.main.id
+      name                  = "log-analytics-destination"
+    }
+  }
+
+  data_flow {
+    streams      = ["Microsoft-Syslog"]
+    destinations = ["log-analytics-destination"]
+  }
+
+  data_sources {
+    syslog {
+      name = "linux-syslog"
+
+      facility_names = [
+        "auth",
+        "authpriv",
+        "cron",
+        "daemon",
+        "kern",
+        "syslog",
+        "user"
+      ]
+
+      log_levels = [
+        "Warning",
+        "Error",
+        "Critical",
+        "Alert",
+        "Emergency"
+      ]
+
+      streams = ["Microsoft-Syslog"]
+    }
+  }
+
+  tags = {
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+    Owner       = var.owner
+    Project     = "Terraform Azure Infrastructure"
+  }
+}
+
+resource "azurerm_monitor_data_collection_rule_association" "linux_vm" {
+  name                    = var.data_collection_rule_association_name
+  target_resource_id      = azurerm_linux_virtual_machine.web.id
+  data_collection_rule_id = azurerm_monitor_data_collection_rule.linux.id
+  description             = "Associates the Linux VM with its Syslog data collection rule."
+
+  depends_on = [
+    azurerm_virtual_machine_extension.azure_monitor_agent
+  ]
+}
+

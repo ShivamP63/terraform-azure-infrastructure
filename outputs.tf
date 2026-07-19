@@ -52,3 +52,24 @@ output "log_analytics_workspace_id" {
   description = "Resource ID of the Log Analytics workspace"
   value       = azurerm_log_analytics_workspace.main.id
 }
+
+output "azure_monitor_agent_extension_name" {
+  description = "Name of the Azure Monitor Agent extension"
+  value       = azurerm_virtual_machine_extension.azure_monitor_agent.name
+}
+
+output "data_collection_rule_name" {
+  description = "Name of the Azure Monitor Data Collection Rule"
+  value       = azurerm_monitor_data_collection_rule.linux.name
+}
+
+output "data_collection_rule_id" {
+  description = "Resource ID of the Azure Monitor Data Collection Rule"
+  value       = azurerm_monitor_data_collection_rule.linux.id
+}
+
+output "data_collection_rule_association_id" {
+  description = "Resource ID of the VM Data Collection Rule association"
+  value       = azurerm_monitor_data_collection_rule_association.linux_vm.id
+}
+
