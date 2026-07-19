@@ -55,6 +55,18 @@ resource "azurerm_network_security_group" "web" {
     destination_address_prefix = "*"
   }
 
+  security_rule {
+    name                       = "Allow-SSH-From-Admin"
+    priority                   = 120
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = var.allowed_ssh_source_address
+    destination_address_prefix = "*"
+  }
+
   tags = {
     Environment = var.environment
     ManagedBy   = "Terraform"

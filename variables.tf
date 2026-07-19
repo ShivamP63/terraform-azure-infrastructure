@@ -74,3 +74,44 @@ variable "network_security_group_name" {
   type        = string
   default     = "nsg-contoso-web-dev"
 }
+
+variable "public_ip_name" {
+  description = "Name of the public IP address used by the Linux VM"
+  type        = string
+  default     = "pip-contoso-web-dev"
+}
+
+variable "network_interface_name" {
+  description = "Name of the network interface used by the Linux VM"
+  type        = string
+  default     = "nic-contoso-web-dev"
+}
+
+variable "linux_vm_name" {
+  description = "Name of the Linux virtual machine"
+  type        = string
+  default     = "vm-contoso-web-dev"
+}
+
+variable "linux_vm_size" {
+  description = "Azure VM size used by the Linux virtual machine"
+  type        = string
+  default     = "Standard_D2s_v3"
+}
+
+variable "admin_username" {
+  description = "Administrator username for the Linux virtual machine"
+  type        = string
+  default     = "azureadmin"
+}
+
+variable "ssh_public_key_path" {
+  description = "Local path to the SSH public key used by the Linux virtual machine"
+  type        = string
+  default     = "~/.ssh/terraform-azure-infrastructure.pub"
+}
+
+variable "allowed_ssh_source_address" {
+  description = "Public IPv4 address permitted to connect to the Linux VM using SSH"
+  type        = string
+}

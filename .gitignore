@@ -27,3 +27,16 @@ terraform.rc.json
 # OS files
 .DS_Store
 Thumbs.db
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+terraform.tfvars
+
+# SSH keys
+*.pem
+*.key
+*.ppk
