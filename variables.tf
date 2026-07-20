@@ -165,3 +165,35 @@ variable "data_collection_rule_association_name" {
   type        = string
   default     = "dcra-contoso-linux-dev"
 }
+
+variable "action_group_name" {
+  description = "Name of the Azure Monitor action group."
+  type        = string
+}
+
+variable "action_group_short_name" {
+  description = "Short name used in Azure Monitor notifications."
+  type        = string
+
+  validation {
+    condition     = length(var.action_group_short_name) <= 12
+    error_message = "The action group short name must not exceed 12 characters."
+  }
+}
+
+variable "alert_email_address" {
+  description = "Email address that receives Azure Monitor alert notifications."
+  type        = string
+  sensitive   = true
+}
+
+variable "cpu_alert_name" {
+  description = "CPU metric alert name."
+  type        = string
+}
+
+variable "cpu_alert_threshold" {
+  description = "CPU percentage threshold."
+  type        = number
+  default     = 80
+}

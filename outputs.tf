@@ -73,3 +73,21 @@ output "data_collection_rule_association_id" {
   value       = azurerm_monitor_data_collection_rule_association.linux_vm.id
 }
 
+output "action_group_name" {
+  description = "Name of the Azure Monitor action group."
+  value       = azurerm_monitor_action_group.operations.name
+}
+
+output "action_group_id" {
+  description = "Resource ID of the Azure Monitor action group."
+  value       = azurerm_monitor_action_group.operations.id
+}
+
+output "cpu_metric_alert_name" {
+  value = azurerm_monitor_metric_alert.vm_cpu.name
+}
+
+output "cpu_metric_alert_id" {
+  value = azurerm_monitor_metric_alert.vm_cpu.id
+}
+
