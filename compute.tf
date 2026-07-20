@@ -6,12 +6,7 @@ resource "azurerm_public_ip" "web" {
   allocation_method = "Static"
   sku               = "Standard"
 
-  tags = {
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-    Owner       = var.owner
-    Project     = "Terraform Azure Infrastructure"
-  }
+  tags = local.common_tags
 }
 
 resource "azurerm_network_interface" "web" {
@@ -26,12 +21,7 @@ resource "azurerm_network_interface" "web" {
     public_ip_address_id          = azurerm_public_ip.web.id
   }
 
-  tags = {
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-    Owner       = var.owner
-    Project     = "Terraform Azure Infrastructure"
-  }
+  tags = local.common_tags
 }
 
 resource "azurerm_linux_virtual_machine" "web" {
@@ -71,10 +61,5 @@ resource "azurerm_linux_virtual_machine" "web" {
     type = "SystemAssigned"
   }
 
-  tags = {
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-    Owner       = var.owner
-    Project     = "Terraform Azure Infrastructure"
-  }
+  tags = local.common_tags
 }

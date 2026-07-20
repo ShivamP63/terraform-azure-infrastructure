@@ -9,12 +9,7 @@ resource "azurerm_log_analytics_workspace" "main" {
   internet_ingestion_enabled = true
   internet_query_enabled     = true
 
-  tags = {
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-    Owner       = var.owner
-    Project     = "Terraform Azure Infrastructure"
-  }
+  tags = local.common_tags
 }
 
 resource "azurerm_virtual_machine_extension" "azure_monitor_agent" {
@@ -26,12 +21,7 @@ resource "azurerm_virtual_machine_extension" "azure_monitor_agent" {
   auto_upgrade_minor_version = true
   automatic_upgrade_enabled  = true
 
-  tags = {
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-    Owner       = var.owner
-    Project     = "Terraform Azure Infrastructure"
-  }
+  tags = local.common_tags
 }
 
 resource "azurerm_monitor_data_collection_rule" "linux" {
@@ -77,12 +67,7 @@ resource "azurerm_monitor_data_collection_rule" "linux" {
     }
   }
 
-  tags = {
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-    Owner       = var.owner
-    Project     = "Terraform Azure Infrastructure"
-  }
+  tags = local.common_tags
 }
 
 resource "azurerm_monitor_data_collection_rule_association" "linux_vm" {

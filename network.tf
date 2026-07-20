@@ -4,12 +4,7 @@ resource "azurerm_virtual_network" "main" {
   resource_group_name = azurerm_resource_group.main.name
   address_space       = var.virtual_network_address_space
 
-  tags = {
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-    Owner       = var.owner
-    Project     = "Terraform Azure Infrastructure"
-  }
+  tags = local.common_tags
 }
 
 resource "azurerm_subnet" "web" {
@@ -67,12 +62,7 @@ resource "azurerm_network_security_group" "web" {
     destination_address_prefix = "*"
   }
 
-  tags = {
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-    Owner       = var.owner
-    Project     = "Terraform Azure Infrastructure"
-  }
+  tags = local.common_tags
 }
 
 resource "azurerm_subnet_network_security_group_association" "web" {

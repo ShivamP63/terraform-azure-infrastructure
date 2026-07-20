@@ -26,12 +26,7 @@ resource "azurerm_storage_account" "main" {
     }
   }
 
-  tags = {
-    Environment = var.environment
-    ManagedBy   = "Terraform"
-    Owner       = var.owner
-    Project     = "Terraform Azure Infrastructure"
-  }
+  tags = local.common_tags
 }
 
 resource "azurerm_storage_container" "application_data" {
