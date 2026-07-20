@@ -1,65 +1,31 @@
-resource "azurerm_public_ip" "web" {
-  name                = var.public_ip_name
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+module "compute" {
+  source = "./modules/compute"
 
-  allocation_method = "Static"
-  sku               = "Standard"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+  subnet_id           = module.networking.web_subnet_id
+
+  public_ip_name         = var.public_ip_name
+  network_interface_name = var.network_interface_name
+  linux_vm_name          = var.linux_vm_name
+  linux_vm_size          = var.linux_vm_size
+  admin_username         = var.admin_username
+  ssh_public_key_path    = var.ssh_public_key_path
 
   tags = local.common_tags
 }
 
-resource "azurerm_network_interface" "web" {
-  name                = var.network_interface_name
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = module.networking.web_subnet_id
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.web.id
-  }
-
-  tags = local.common_tags
+moved {
+  from = azurerm_public_ip.web
+  to   = module.compute.azurerm_public_ip.web
 }
 
-resource "azurerm_linux_virtual_machine" "web" {
-  name                = var.linux_vm_name
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  size                = var.linux_vm_size
-  admin_username      = var.admin_username
+moved {
+  from = azurerm_network_interface.web
+  to   = module.compute.azurerm_network_interface.web
+}
 
-  disable_password_authentication = true
-
-  network_interface_ids = [
-    azurerm_network_interface.web.id
-  ]
-
-  admin_ssh_key {
-    username   = var.admin_username
-    public_key = file(pathexpand(var.ssh_public_key_path))
-  }
-
-  os_disk {
-    name                 = "${var.linux_vm_name}-osdisk"
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts-gen2"
-    version   = "latest"
-  }
-
-  boot_diagnostics {}
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  tags = local.common_tags
+moved {
+  from = azurerm_linux_virtual_machine.web
+  to   = module.compute.azurerm_linux_virtual_machine.web
 }

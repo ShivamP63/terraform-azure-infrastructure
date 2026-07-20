@@ -20,7 +20,7 @@ resource "azurerm_monitor_action_group" "operations" {
 resource "azurerm_monitor_metric_alert" "vm_cpu" {
   name                = var.cpu_alert_name
   resource_group_name = azurerm_resource_group.main.name
-  scopes              = [azurerm_linux_virtual_machine.web.id]
+  scopes              = [module.compute.linux_vm_id]
   description         = "Alert when VM CPU exceeds the configured threshold."
 
   severity    = 2

@@ -15,22 +15,22 @@ output "resource_group_id" {
 
 output "linux_vm_name" {
   description = "Name of the Linux virtual machine"
-  value       = azurerm_linux_virtual_machine.web.name
+  value       = module.compute.linux_vm_name
 }
 
 output "linux_vm_public_ip" {
   description = "Public IP address of the Linux virtual machine"
-  value       = azurerm_public_ip.web.ip_address
+  value       = module.compute.linux_vm_public_ip
 }
 
 output "linux_vm_private_ip" {
   description = "Private IP address of the Linux virtual machine"
-  value       = azurerm_network_interface.web.private_ip_address
+  value       = module.compute.linux_vm_private_ip
 }
 
 output "ssh_connection_command" {
   description = "Command used to connect to the Linux virtual machine"
-  value       = "ssh -i ~/.ssh/terraform-azure-infrastructure ${var.admin_username}@${azurerm_public_ip.web.ip_address}"
+  value       = "ssh -i ~/.ssh/terraform-azure-infrastructure ${var.admin_username}@${module.compute.linux_vm_public_ip}"
 }
 
 output "storage_account_name" {

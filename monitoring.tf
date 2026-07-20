@@ -14,7 +14,7 @@ resource "azurerm_log_analytics_workspace" "main" {
 
 resource "azurerm_virtual_machine_extension" "azure_monitor_agent" {
   name                       = var.azure_monitor_agent_name
-  virtual_machine_id         = azurerm_linux_virtual_machine.web.id
+  virtual_machine_id         = module.compute.linux_vm_id
   publisher                  = "Microsoft.Azure.Monitor"
   type                       = "AzureMonitorLinuxAgent"
   type_handler_version       = "1.42"
@@ -72,7 +72,7 @@ resource "azurerm_monitor_data_collection_rule" "linux" {
 
 resource "azurerm_monitor_data_collection_rule_association" "linux_vm" {
   name                    = var.data_collection_rule_association_name
-  target_resource_id      = azurerm_linux_virtual_machine.web.id
+  target_resource_id      = module.compute.linux_vm_id
   data_collection_rule_id = azurerm_monitor_data_collection_rule.linux.id
   description             = "Associates the Linux VM with its Syslog data collection rule."
 
