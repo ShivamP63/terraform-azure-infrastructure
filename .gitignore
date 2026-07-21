@@ -1,42 +1,35 @@
-# Terraform
-.terraform/
-
-# State files
-*.tfstate
-*.tfstate.*
-
-# Variable files
-*.tfvars
-
-# Crash logs
-crash.log
-
-# Override files
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
-
-# Sensitive files
-terraform.rc
-terraform.rc.json
-
-# VS Code
-.vscode/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Terraform
+# Terraform working directory and state
 .terraform/
 *.tfstate
 *.tfstate.*
 *.tfplan
 tfplan
-terraform.tfvars
+destroy.tfplan
 
-# SSH keys
+# Environment-specific and sensitive variables
+*.tfvars
+!*.tfvars.example
+
+# Terraform crash and override files
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# CLI configuration and credentials
+.terraformrc
+terraform.rc
+terraform.rc.json
+
+# SSH and certificate private keys
 *.pem
 *.key
 *.ppk
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

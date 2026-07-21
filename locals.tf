@@ -1,13 +1,11 @@
 locals {
   project_name = "Terraform Azure Infrastructure"
-  environment  = "dev"
-  owner        = "Shivam Pande"
   managed_by   = "Terraform"
 
   common_tags = {
-    Environment = local.environment
+    Environment = var.environment
     Project     = local.project_name
-    Owner       = local.owner
+    Owner       = var.owner
     ManagedBy   = local.managed_by
   }
 }

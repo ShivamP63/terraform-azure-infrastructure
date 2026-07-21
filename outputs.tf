@@ -84,10 +84,12 @@ output "action_group_id" {
 }
 
 output "cpu_metric_alert_name" {
-  value = module.monitoring.cpu_metric_alert_name
+  description = "Name of the VM CPU metric alert."
+  value       = module.monitoring.cpu_metric_alert_name
 }
 
 output "cpu_metric_alert_id" {
-  value = module.monitoring.cpu_metric_alert_id
+  description = "Resource ID of the VM CPU metric alert."
+  value       = module.monitoring.cpu_metric_alert_id
 }
 
